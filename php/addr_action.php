@@ -6,51 +6,20 @@ require_once("../classes/Validate.php");
 session_start();
 
 $db = new DB();
-$filter = new Validate();
 
 // Error message if anything is invalid
 $errorMsg = "";
 
-//Regular and safe vars.  
-$realName = "";
-$address = "";
-$zipCode = "";
-
+//Safe vars  
 $safeRealName = "";
 $safeAddress = "";
 $safeZipCode = "";
 
-// Runs webservice if form was filled out
-/* if(isset($_POST["realName"]) && isset($_POST["address"]) && isset($_POST["zipCode"])){
-	
-	
-	//Tried creating a class for this, confused
-	$safeRealName = $filter->validateSanitizeString($_POST["realName"]);
-	print $safeRealName;
-	
-	$realName = trim($_POST["realName"]);
-	$safeRealName = $db->dbEsc($realName);
-	$safeRealName = filter_var($safeRealName, FILTER_SANITIZE_STRING);
-	
-	$address = trim($_POST["address"]);
-	$safeAddress = $db->dbEsc($address);
-	$safeAddress = filter_var($safeAddress, FILTER_SANITIZE_STRING);
-	
-	$zipCode = trim($_POST["zipCode"]);
-	$safeZipCode = $db->dbEsc($zipCode);
-	$safeZipCode = filter_var($safeZipCode, FILTER_SANITIZE_STRING);
-
-}
-else{
-	$errorMsg .= '<li class = "Please fill out the film</li>';
-} */
-
-// Email logic.  Checks isset/!empty.  Trims/real_escape_strings/sanitizes/validates.  Creates an error if nothing entered or invalid selection
+// Realname logic.  Checks isset/!empty. Appends to $errorMsg if nothing entered or invalid selection
 if (isset($_POST["realName"]) && !empty($_POST["realName"])){
-	$realName = trim($_POST['realName']);
-
-	$safeRealName = filter_var($realName, FILTER_SANITIZE_STRING);
-	$safeRealName = $db->dbEsc($safeRealName);
+	
+	$safeRealName = validateSanitizeString($_POST["realName"]);
+	
 	if(empty($safeRealName)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid real name</li>';
 	}
@@ -59,12 +28,11 @@ else{
 	$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid real name</li>';
 }
 
-// Email logic.  Checks isset/!empty.  Trims/real_escape_strings/sanitizes/validates.  Creates an error if nothing entered or invalid selection
+// Address logic.  Checks isset/!empty. Appends to $errorMsg if nothing entered or invalid selection
 if (isset($_POST["address"]) && !empty($_POST["address"])){
-	$address = trim($_POST['address']);
-
-	$safeAddress = filter_var($address, FILTER_SANITIZE_STRING);
-	$safeAddress = $db->dbEsc($safeAddress);
+	
+	$safeAddress = validateSanitizeString($_POST["address"]);
+	
 	if(empty($safeAddress)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid address</li>';
 	}
@@ -73,13 +41,11 @@ else{
 	$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid address</li>';
 }
 
-
-// Email logic.  Checks isset/!empty.  Trims/real_escape_strings/sanitizes/validates.  Creates an error if nothing entered or invalid selection
+// Zipcode logic.  Checks isset/!empty. Appends to $errorMsg if nothing entered or invalid selection
 if (isset($_POST["zipCode"]) && !empty($_POST["zipCode"])){
-	$zipCode = trim($_POST['zipCode']);
-
-	$safeZipCode = filter_var($zipCode, FILTER_SANITIZE_STRING);
-	$safeZipCode = $db->dbEsc($safeZipCode);
+	
+	$safeZipCode = validateSanitizeString($_POST["zipCode"]);
+	
 	if(empty($safeZipCode)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid zip code</li>';
 	}
@@ -87,7 +53,6 @@ if (isset($_POST["zipCode"]) && !empty($_POST["zipCode"])){
 else{
 	$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid zip code</li>';
 }
-
 
 
 $page = new Template('Address Data'); // Automatically sets title
@@ -113,16 +78,16 @@ print '</button>';
 print '<div class="collapse navbar-collapse" id="navbarSupportedContent">';
 print '<ul class="navbar-nav mr-auto">';
 
-print '<li class="nav-item ">';
-print '<a class="nav-link" href="basicreg.php">Basic Register (Step 1)</a>';
+print '<li class="nav-item">';
+print '<a class="nav-link disabled" >Step 1 - Basic Registration</a>';
 print '</li>';
 
 print '<li class="nav-item active">';
-print '<a class="nav-link" href="addr.php">Address (Step 2)</a>';
+print '<a class="nav-link " >Step 2 - Address</a>';
 print '</li>';
 
 print '<li class="nav-item ">';
-print '<a class="nav-link" href="confirm.php">Confirm (Step 3)</a>';
+print '<a class="nav-link disabled" >Step 3 - Confirmation</a>';
 print '</li>';
 
 print '</ul>';
@@ -198,13 +163,19 @@ if(strlen($errorMsg) > 0){
 	print '<h1 class="uw">Register for an Account (Step 2)</h1><hr>';
 
 	print '<div class="border rounded col-md-10 mx-auto px-4 pb-3">';
-	print '<h2 class="mt-3 text-center">The following errors were found</h2>';
-	print '<ul class="list-group list-group-flush">';
-	print $errorMsg;
-	print '</ul>';
-	print '<div class="col text-center">';
-	print '<button type="submit" class="btn btn-primary mt-3" onclick="goBack()">Back</button>';
-
+	if(!empty($_SESSION['p1']) && !empty($_SESSION['p2'])){
+		print '<h2 class="mt-3 text-center">The following errors were found</h2>';
+		print '<ul class="list-group list-group-flush">';
+		print $errorMsg;
+		print '</ul>';
+		print '<div class="col text-center">';
+		print '<button type="submit" class="btn btn-primary mt-3" onclick="goBack()">Back</button>';
+	}
+	else{
+		print '<h2 class="mt-3 text-center">Something went wrong</h2>';
+		print '<p class="mt-3 text-center">Any progress has been saved</p>';
+		print '<div class="text-center"><a href="basicreg.php">Return to Step 1</a></div>';
+	}
 	print '</div>';
 	print '</div>';
 

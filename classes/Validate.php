@@ -2,29 +2,21 @@
 
 require_once("DB.class.php");
 
-$db = new DB();
 
-class Validate {
-
-	//private $_bottom;
-
-	// What do with this?
-	function __construct() {
-		;
-	}
-
-
-
-	function validateSanitizeString($string) {
-		$safeString = trim($string);
-		$safeString = dbEsc($safeString);
-		//$safeString = $db->dbEsc($safeString);
-		$safeString = filter_var($safeString, FILTER_SANITIZE_STRING);
-		return $safeString;
-	} 
-
-
-
-} // end class
+function validateSanitizeString($string) {
+	$db = new DB();
+	$safeString = trim($string);
+	$safeString = $db->dbEsc($safeString);
+	$safeString = filter_var($safeString, FILTER_SANITIZE_STRING);
+	return $safeString;
+}
+function validateSanitizeEmail($string) {
+	$db = new DB();
+	$safeString = trim($string);
+	$safeString = $db->dbEsc($safeString);
+	$safeString = filter_var($safeString, FILTER_SANITIZE_EMAIL);
+	$safeString = filter_var($safeString, FILTER_VALIDATE_EMAIL);
+	return $safeString;
+}
 
 ?>

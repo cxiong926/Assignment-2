@@ -5,6 +5,8 @@ session_start();
 
 $page = new Template('Address Data'); // Automatically sets title
 
+// Visited page 2
+$_SESSION['p2'] = true;
 
 $page->addHeadElement('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>');
 $page->addHeadElement('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>');
@@ -26,23 +28,21 @@ print '</button>';
 print '<div class="collapse navbar-collapse" id="navbarSupportedContent">';
 print '<ul class="navbar-nav mr-auto">';
 
-print '<li class="nav-item ">';
-print '<a class="nav-link" href="basicreg.php">Basic Register (Step 1)</a>';
+print '<li class="nav-item">';
+print '<a class="nav-link disabled" >Step 1 - Basic Registration</a>';
 print '</li>';
 
 print '<li class="nav-item active">';
-print '<a class="nav-link" href="addr.php">Address (Step 2)</a>';
+print '<a class="nav-link" >Step 2 - Address</a>';
 print '</li>';
 
 print '<li class="nav-item ">';
-print '<a class="nav-link" href="confirm.php">Confirm (Step 3)</a>';
+print '<a class="nav-link disabled" >Step 3 - Confirmation</a>';
 print '</li>';
 
 print '</ul>';
 print '</div>';
 print '</nav>';
-
-
 
 
 print '<div class="container wrapper">';
@@ -94,7 +94,7 @@ print '</div>';
 // Previous and next buttons
 print '<div class="mb-2 form-group row">';
 print '<div class="col text-center">';
-print '<button type="button" class="btn btn-primary mr-4" onclick="goBack()">Previous</button>';
+print '<a href="http://cnmtsrv2.uwsp.edu/~bxion419/Assignment2/php/basicreg.php"><button type="button" class="btn btn-primary mr-4" >Previous</button><a>';
 print '<button type="submit" name="submit" class="btn btn-primary ml-4">Next</button>';
 print '</div>';
 print '</div>';

@@ -5,6 +5,8 @@ session_start();
 
 $page = new Template('Registration'); // Automatically sets title
 
+// Visited page 1
+$_SESSION['p1'] = true;
 
 $page->addHeadElement('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>');
 $page->addHeadElement('<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>');
@@ -27,15 +29,15 @@ print '<div class="collapse navbar-collapse" id="navbarSupportedContent">';
 print '<ul class="navbar-nav mr-auto">';
 
 print '<li class="nav-item active">';
-print '<a class="nav-link" href="basicreg.php">Basic Register (Step 1)</a>';
+print '<a class="nav-link" >Step 1 - Basic Registration</a>';
 print '</li>';
 
 print '<li class="nav-item ">';
-print '<a class="nav-link" href="addr.php">Address (Step 2)</a>';
+print '<a class="nav-link disabled" >Step 2 - Address</a>';
 print '</li>';
 
 print '<li class="nav-item ">';
-print '<a class="nav-link" href="confirm.php">Confirm (Step 3)</a>';
+print '<a class="nav-link disabled" >Step 3 - Confirmation</a>';
 print '</li>';
 
 print '</ul>';
@@ -88,13 +90,8 @@ print '<button type="submit" name="submit" class="btn btn-primary">Next</button>
 print '</div>';
 print '</div>';
 
-
-
 print '</form>';
 
-
-
-// container div end tag
 print '</div>';
 
 print $page->getBottomSection(); // closes the html
