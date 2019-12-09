@@ -94,18 +94,13 @@ print '</div>';
 // Previous and next buttons
 print '<div class="mb-2 form-group row">';
 print '<div class="col text-center">';
-print '<a href="http://cnmtsrv2.uwsp.edu/~bxion419/Assignment2/php/basicreg.php"><button type="button" class="btn btn-primary mr-4" >Previous</button><a>';
+print '<a href="http://cnmtsrv2.uwsp.edu/~bxion419/Assignment2/php/basicreg.php" class="btn btn-primary" role="button" aria-pressed="true">Previous</a>';
 print '<button type="submit" name="submit" class="btn btn-primary ml-4">Next</button>';
 print '</div>';
 print '</div>';
 
-
-
 print '</form>';
 
-
-
-// container div end tag
 print '</div>';
 
 print $page->getBottomSection(); // closes the html

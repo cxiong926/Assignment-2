@@ -45,8 +45,6 @@ print '</div>';
 print '</nav>';
 
 
-
-
 print '<div class="container wrapper">';
 print '<h1 class="uw">Register for an Account (Step 1)</h1><hr>';
 print '<p class="text-center">Please enter your email and create a password for you account.</p>';

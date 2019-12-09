@@ -17,11 +17,9 @@ $safeRealName = "";
 $safeAddress = "";
 $safeZipCode = "";
 
-//print $_SESSION['visited'];
-
+// Checks if user visited the three forms
 if(isset($_SESSION['p1']) && isset($_SESSION['p2']) && isset($_SESSION['p3'])){
 	
-
 
 	// Updates session variables if there are changes
 	if(isset($_SESSION['email'])){
@@ -199,6 +197,7 @@ print '</ul>';
 print '</div>';
 print '</nav>';
 
+// Error message if user hasn't visited all forms
 if(empty($_SESSION['p1']) || empty($_SESSION['p2']) || empty($_SESSION['p3'])){
 	print '<div class="container wrapper">';
 	print '<h1 class="uw">Register for an Account (Step 3)</h1><hr>';

@@ -174,7 +174,7 @@ if(strlen($errorMsg) > 0){
 	else{
 		print '<h2 class="mt-3 text-center">Something went wrong</h2>';
 		print '<p class="mt-3 text-center">Any progress has been saved</p>';
-		print '<div class="text-center"><a href="basicreg.php">Return to Step 1</a></div>';
+		print '<div class="text-center"><a href="basicreg.php">Return to Step 1</a>';
 	}
 	print '</div>';
 	print '</div>';
